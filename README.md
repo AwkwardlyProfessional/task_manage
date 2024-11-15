@@ -21,7 +21,7 @@
 
 ## Installation
 ### 1. Clone the repository:
-    git clone https://github.com/AwkwardlyProfessional/Task-Management-App.git
+    git clone https://github.com/AwkwardlyProfessional/task_manage.git
 
 ### 2. Install Dependencies:
     pip install -r requirements.txt
