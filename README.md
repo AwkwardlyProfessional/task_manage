@@ -1,112 +1,267 @@
-# Task Management Application
+# Task Manager Application 
 
-## Overview
 
-The Task Management Application is a web-based tool designed to help users schedule, manage, and prioritize their tasks efficiently. Users can create, edit, delete, and view tasks with different levels of priority and completion status. The app also includes features for sending email reminders about upcoming tasks, managing user accounts, and allowing users to set up email alerts.
+## What is this Application?
+  
+  This is a Flask based Task management system allowing users to schedule, edit, and prioritize events. Users can log in, add, and track tasks, receive email alerts, and customize their task management preferences. The application includes features for user authentication, dynamic scheduling, and personalized email notifications for improved productivity. 
+  
+You may access the application [here](https://task-manager-application-37yuo72rz-vinay-rohit-reddy-s-projects.vercel.app/).
+
+
+## Introduction
+  - This Flask-based Task Manager application allows users to perform various task-related operations. 
+  - Users can register, log in, add, edit, delete, and mark tasks as completed.
+  - It also sends reminders for the overdue tasks by end of the day.
 
 ## Features
+  - **User Authentication:** Users can sign up and log in securely.
+  - **Task Management:** Add, edit, delete, and mark tasks as completed.
+  - **Email Reminders:** Sends reminders for overdue tasks via email.
+  - **Responsive UI:** User-friendly interface for managing tasks.
+  - **Database:** PostgreSQL database used to store user data and task details.
 
-- **User Authentication:** Users can sign up, log in, and log out. Passwords are securely stored using hashing.
-- **Task Management:** Users can create, edit, delete, and view tasks. Each task has a name, date, time, duration, notes, and priority level.
-- **Email Alerts:** Users can set email alerts to receive notifications for upcoming tasks or completed tasks.
-- **Task Prioritization:** Tasks can be prioritized to help users focus on high-priority items.
-- **Password Reset:** Users can reset their passwords if they forget them by receiving a password reset email.
+## Installation
+### 1. Clone the repository:
+    git clone https://github.com/rohitreddy192/Task-Manager-Application.git
+### 2. Navigate to the project directory:
+    cd Daily_Task_Scheduler
+### 3. Install Dependencies:
+    pip install -r requirements.txt
+    
+## Local Usage
+### 1. Run Application:
+     python app.py
+### 2. Access the Application:
+    - Open a web browser and go to http://localhost:5000 to access the Task Manager application.
+### 3. Functionalities:
+    - Register or log in to manage tasks.
+    - Add, edit, delete tasks, and mark them as completed.
+    - Receive email reminders for overdue tasks.
+    
+## Technologies Used
+  - Flask
+  - PostgreSQL
+  - HTML/CSS
+  - JavaScript
+  - Python 3.x
 
-## Tech Stack
+## File Structure
+```bash
+├── app.py                  # Main Flask application file.
+├── requirements.txt        # Contains all requirements necessary for the application.
+├── runtime.txt             # Defines the runtime used for the application.
+├── vercel.json             # Contains the deployment information required to host and run the application.
+└── templates/
+    ├── base.html       
+    ├── add.html           
+    ├── completed_tasks.html           
+    ├── edit_task.html
+    ├── email_alert.html       
+    ├── email_template.html           
+    ├── forgot_password.html           
+    ├── index.html
+    ├── login.html       
+    ├── profile.html           
+    ├── reset_password.html           
+    ├── signup.html
+```
 
-- **Backend:** Python with Flask
-- **Database:** PostgreSQL (or SQLite as fallback)
-- **Authentication:** Flask-Login
-- **Email:** Flask-Mail for sending email alerts
-- **Form Handling:** Flask-WTF
-- **Styling:** HTML, CSS (Bootstrap for responsiveness)
-- **Version Control:** Git (GitHub)
+## Data Models
 
-## Setup Instructions
+### User
 
-### Prerequisites
+  The `User` class represents the user entity in the application, encapsulating the following attributes:
 
-Before setting up the project, make sure you have the following installed:
+  - **id**: Unique identifier for each user (Primary Key).
+  - **name**: User's name (String, 80 characters, unique, not nullable).
+  - **password**: User's password (String, 255 characters, not nullable).
+  - **email**: User's email address (String, 120 characters, unique, not nullable).
+  - **email_alert**: Boolean indicating whether email alerts are enabled (Default: False).
 
-- **Python 3.x**: Download it from [python.org](https://www.python.org/downloads/).
-- **PostgreSQL**: You can use PostgreSQL for production, or use SQLite for local development. If using PostgreSQL, make sure the connection URL is set properly in the environment variables.
+### Event
 
-### 1. Clone the Repository
+  The `Event` class represents scheduled events associated with a user, featuring the following attributes:
 
-First, clone the repository to your local machine:
-git clone https://github.com/YourGitHubUsername/Task-Management-App.git
-cd Task-Management-App
-2. Install Dependencies
-Create a virtual environment and activate it:
+  - **id**: Unique identifier for each event (Primary Key).
+  - **task_name**: Name of the task or event (String, not nullable).
+  - **date**: Date of the event (Date, not nullable).
+  - **time**: Time of the event (Time, not nullable).
+  - **duration**: Duration of the event in minutes (Integer, not nullable).  
+  - **notes**: Additional notes for the event (Text).
+  - **completed**: Integer indicating completion status (Default: 0).
+  - **priority**: Integer indicating priority level (Default: 5).
+  - **user_id**: Foreign key linking the event to a specific user.
 
-bash
-Copy code
-python3 -m venv venv
-source venv/bin/activate   # On Windows, use venv\Scripts\activate
-Install the required dependencies:
+  These data models provide a structured representation of user information and scheduled events within the application. The `User` model captures essential user details, while the `Event` model allows for the management of scheduled tasks associated with a user. Adjustments can be made based on specific project requirements and database design considerations.
 
-bash
-Copy code
-pip install -r requirements.txt
-3. Set Environment Variables
-Set the following environment variables for configuration:
+## Forms
 
-SECRET_KEY: Used for session management (you can use secrets.token_hex(24) to generate one).
-MAIL_USERNAME: Your email address (used to send emails).
-MAIL_PASSWORD: Your email password or app-specific password (if using Gmail).
-DATABASE_URL: Your PostgreSQL connection URL (for example, postgres://user:password@localhost/dbname). If you're using SQLite, use sqlite:///default.db.
-You can set these variables in your terminal or create a .env file and use a library like python-dotenv to load them automatically.
+  In this Flask application, various forms are used to facilitate user interactions. The forms are created using the Flask-WTF extension, providing a convenient way to handle form data validation and submission.
 
-4. Initialize the Database
-Run the following commands to create the database and tables:
+### LoginForm
 
-bash
-Copy code
-flask db upgrade
-This will create the necessary tables for users and tasks in the database.
+  The `LoginForm` allows users to log in by providing their username and password.
 
-5. Run the Application
-To start the development server, run:
+  Fields:
+  - **username**: String field for the username (required).
+  - **password**: Password field for the user's password (required).
 
-bash
-Copy code
-flask run
-Your application will be available at http://localhost:5000.
+### RegistrationForm
 
-Usage
-Sign Up: Create an account by providing a username, email, and password.
-Log In: Use your credentials to log in to the application.
-Create Tasks: Use the dashboard to add new tasks with details such as name, date, time, duration, and priority.
-Set Email Alerts: Configure email alerts for task reminders and updates.
-Task Management: View, edit, and delete your tasks as needed.
-Additional Information
-Password Hashing
-The application uses Werkzeug's generate_password_hash function to securely hash passwords before storing them in the database. This ensures that user credentials are never stored in plain text.
+  The `RegistrationForm` enables users to create a new account by providing a username, email, and password.
 
-Email Alerts
-Email alerts are sent using Flask-Mail. You can configure SMTP settings in the MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, and MAIL_PASSWORD environment variables.
+  Fields:
+  - **username**: String field for the new username (required).
+  - **email**: String field for the user's email address (required, must be a valid email).
+  - **password**: Password field for the user's password (required).
+  - **confirm_password**: Password field to confirm the entered password (required, must match the password).
 
-Database
-The application uses SQLAlchemy for database management, and supports both PostgreSQL and SQLite databases. The default setup is for SQLite, but PostgreSQL can be configured by setting the DATABASE_URL environment variable.
+### EventForm
 
-File Structure
-plaintext
-Copy code
-/Task-Management-App
-├── app.py                # Main application file
-├── models.py             # Database models
-├── forms.py              # Forms for user input
-├── templates/            # HTML templates
-├── static/               # Static files (CSS, JS)
-├── requirements.txt      # Project dependencies
-├── .env                  # Environment variables (optional)
-└── README.md             # Project documentation
-Troubleshooting
-Missing environment variables: Ensure that all required environment variables are set, including database URL and email credentials.
-Database Issues: If using PostgreSQL, make sure the database exists and is accessible. Check the connection URL for correctness.
-Email not sending: Double-check your email credentials and SMTP server settings.
-License
-This project is licensed under the MIT License.
+  The `EventForm` is designed for users to submit details for scheduling events.
 
-Contact
-For any questions or contributions, feel free to reach out to me at [YourEmail@example.com] or submit a pull request!
+  Fields:
+  - **task_name**: String field for the name of the task or event (required).
+  - **date**: Date field for specifying the date of the event (required).
+  - **time**: Time field for specifying the time of the event (required).
+  - **duration**: Integer field for specifying the duration of the event in minutes (required).
+  - **notes**: TextArea field for additional notes.
+  - **completed**: Integer field (default: 0) for completion status (assuming it's a checkbox or similar).
+  - **priority**: Integer field (default: 5) for indicating the priority level of the event.
+
+### EmailForm
+
+  The `EmailForm` is used for enabling or disabling email alerts for a user.
+
+  Fields:
+  - **email_alert**: Boolean field for enabling or disabling email alerts (required).
+
+### ForgotPasswordForm
+
+  The `ForgotPasswordForm` assists users in resetting their passwords by providing their username and email.
+
+  Fields:
+  - **username**: String field for the username (required).
+  - **email**: String field for the user's email address (required, must be a valid email).
+
+  These forms enhance the user experience by providing structured and validated input for various functionalities within the application.
+
+
+## Routes
+
+### Authentication
+
+#### Login Route
+
+  - **Route:** `/login`
+  - **Method:** GET, POST
+  - **Description:** Enables users to log in, validates entered credentials, and redirects to the home page upon successful login.
+
+#### Logout Route
+
+  - **Route:** `/logout`
+  - **Method:** GET
+  - **Description:** Logs out the current user and redirects to the login page.
+
+#### Signup Route
+
+  - **Route:** `/signup`
+  - **Method:** GET, POST
+  - **Description:** Allows users to create a new account, validates user input, and redirects to the login page upon successful registration.
+
+#### Forgot Password Route
+  
+  - **Route:** `/forgot_password`
+  - **Method:** GET, POST
+  - **Description:** Initiates the password reset process by providing the username and email, then sends a password reset email.
+
+### Task Management
+
+#### Home Page
+
+  - **Route:** `/`
+  - **Method:** GET, POST
+  - **Description:** The home page/dashboard displays tasks scheduled for the current user, allowing users to add new tasks and view upcoming events.
+
+#### Add Event Route
+
+  - **Route:** `/add_event`
+  - **Method:** GET, POST
+  - **Description:** Allows users to add a new task/event, validates user input, and redirects to the home page upon successful addition.
+
+#### Get Task Details Route
+
+  - **Route:** `/get_task_details/<int:task_id>`
+  - **Method:** GET
+  - **Description:** Retrieves details of a specific task identified by `task_id` and returns the information as JSON.
+
+#### Edit Task Route
+
+  - **Route:** `/edit_task/<int:task_id>`
+  - **Method:** GET, POST
+  - **Description:** Enables users to edit an existing task, displaying the current task details and updating the task upon form submission.
+
+#### Mark Completed Route
+
+  - **Route:** `/mark_completed/<int:task_id>`
+  - **Method:** POST
+  - **Description:** Marks a task as completed based on the `task_id` and updates the database accordingly.
+
+#### Completed Tasks Route
+
+  - **Route:** `/completed_tasks`
+  - **Method:** GET, POST
+  - **Description:** Displays a list of completed tasks for the current user.
+
+#### Prioritize Schedule Route
+
+  - **Route:** `/prioritize_schedule`
+  - **Method:** GET, POST
+  - **Description:** Displays the prioritization feature for scheduling tasks.
+
+#### Prioritize Task Route
+
+  - **Route:** `/prioritize_task/<int:task_id>`
+  - **Method:** POST
+  - **Description:** Allows users to prioritize a specific task by updating its priority level.
+
+#### Email Alert Settings Route
+  
+  - **Route:** `/email_alert_settings`
+  - **Method:** GET, POST
+  - **Description:** Displays the email alert settings for the user.
+
+#### Update Email Alert Route
+  
+  - **Route:** `/update_email_alert`
+  - **Method:** POST
+  - **Description:** Updates the email alert settings for the current user based on the form input.
+
+#### Add Task Route
+  
+  - **Route:** `/add_task`
+  - **Method:** GET, POST
+  - **Description:** Redirects to the `/add_event` route for adding a new task.
+
+#### Delete Task Route
+
+  - **Route:** `/delete_task/<int:task_id>`
+  - **Method:** GET, POST
+  - **Description:** Deletes a task identified by `task_id` from the user's schedule.
+
+### Email Alerts and Notifications
+
+#### Scheduled Task Route
+
+  - **Route:** `/scheduled-task`
+  - **Method:** GET
+  - **Description:** Sends overdue email alerts for tasks scheduled for the current user. Runs a scheduled task to check and send alerts for overdue tasks.
+
+  These routes handle various aspects of user authentication, task management, and email alerts within the application. Adjustments can be made based on specific project requirements and functionality.
+
+## Future Scope & Reference
+  1. This can be further added with many features by integrating with the calendar directly on the system so that we can get a calendar remainder always..
+  2. Implementing an AI generated Task Scheduling Algorithm which can schedule the tasks by user priority and User can select from the options or he may do it manually..
+
+## Contributions
+  Contributions are welcome! If you'd like to contribute to this project, feel free to create issues or pull requests.
