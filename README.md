@@ -4,8 +4,7 @@
 ## What is this Application?
   
   This is a Flask based Task management system allowing users to schedule, edit, and prioritize events. Users can log in, add, and track tasks, receive email alerts, and customize their task management preferences. The application includes features for user authentication, dynamic scheduling, and personalized email notifications for improved productivity. 
-  
-You may access the application [here](https://task-manager-application-37yuo72rz-vinay-rohit-reddy-s-projects.vercel.app/).
+
 
 
 ## Introduction
@@ -22,10 +21,9 @@ You may access the application [here](https://task-manager-application-37yuo72rz
 
 ## Installation
 ### 1. Clone the repository:
-    git clone https://github.com/rohitreddy192/Task-Manager-Application.git
-### 2. Navigate to the project directory:
-    cd Daily_Task_Scheduler
-### 3. Install Dependencies:
+    git clone https://github.com/AwkwardlyProfessional/Task-Management-App.git
+
+### 2. Install Dependencies:
     pip install -r requirements.txt
     
 ## Local Usage
